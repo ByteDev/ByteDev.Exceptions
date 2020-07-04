@@ -7,7 +7,7 @@ namespace ByteDev.Exceptions
     /// Represents when an unexpected enum value is encountered.
     /// </summary>
     [Serializable]
-    public class UnexpectedEnumValueException<TEnum> : Exception
+    public class UnexpectedEnumValueException<TEnum> : Exception where TEnum : Enum
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ByteDev.Common.Exceptions.UnexpectedEnumValueException" /> class.
@@ -36,7 +36,7 @@ namespace ByteDev.Exceptions
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ByteDev.Common.Exceptions.UnexpectedEnumValueException" /> class.
         /// </summary>
-        /// <param name="value">The enum value that was unexpected.</param>
+        /// <param name="value">The unexpected enum value.</param>
         public UnexpectedEnumValueException(TEnum value) : base($"Unexpected value '{value}' for enum '{typeof(TEnum).FullName}'.")
         {
         }

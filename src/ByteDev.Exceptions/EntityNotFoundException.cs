@@ -9,8 +9,14 @@ namespace ByteDev.Exceptions
     [Serializable]
     public class EntityNotFoundException : Exception
     {
+        /// <summary>
+        /// Entity type.
+        /// </summary>
         public Type EntityType { get; }
 
+        /// <summary>
+        /// Entity ID.
+        /// </summary>
         public string EntityId { get; }
 
         /// <summary>

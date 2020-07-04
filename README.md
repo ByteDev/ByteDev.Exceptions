@@ -24,3 +24,10 @@ Full details of the release notes can be viewed on [GitHub](https://github.com/B
 
 ## Usage
 
+The library consists of a small set of custom exceptions:
+
+- `ArgumentDefaultException`
+- `ArgumentEmptyException`
+- `ArgumentNullOrEmptyException`
+- `EntityNotFoundException`
+- `UnexpectedEnumValueException`
