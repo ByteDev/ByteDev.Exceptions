@@ -51,7 +51,7 @@ if (myArg == default)
 
 Use when an argument value cannot be empty. 
 
-For example an empty string `""` or empty collection.
+For example an empty string or empty collection.
 
 ```csharp
 if (name == string.Empty)
