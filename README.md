@@ -31,3 +31,102 @@ The library consists of a small set of custom exceptions:
 - `ArgumentNullOrEmptyException`
 - `EntityNotFoundException`
 - `UnexpectedEnumValueException`
+
+---
+
+### `ArgumentDefaultException`
+
+Use when an argument value cannot be it's `default` value.
+
+```csharp
+if (myArg == default)
+{
+    throw new ArgumentDefaultException(nameof(myArg));
+}
+```
+
+---
+
+### `ArgumentEmptyException`
+
+Use when an argument value cannot be empty. 
+
+For example an empty string `""` or empty collection.
+
+```csharp
+if (name == string.Empty)
+{
+    throw new ArgumentEmptyException(nameof(name));
+}
+```
+
+---
+
+### `ArgumentNullOrEmptyException`
+
+Use when an argument value cannot be null or empty. 
+
+Often in such situations the programmer will decide to throw a `ArgumentException`. 
+
+Using a `ArgumentNullOrEmptyException` instead can give greater precision.
+
+```csharp
+if (string.IsNullOrEmpty(name))
+{
+    throw new ArgumentNullOrEmptyException(nameof(name));
+}
+```
+
+---
+
+### `EntityNotFoundException`
+
+Use when an entity is expected to exist and does not.
+
+For example an entity retrieved from storage or a database. 
+
+Sometimes instead of returning `null` from the method throwing an exception may seem more appropriate.
+
+```csharp
+var customer = customerRepository.GetCustomer(id);
+
+if (customer == null)
+{
+    throw new EntityNotFoundException(typeof(Customer), id);
+}
+```
+
+---
+
+### `UnexpectedEnumValueException`
+
+Use when an unexpected `enum` value is encountered.
+
+```csharp
+enum LightStatus
+{
+    Off,
+    Dimmed,
+    On
+}
+
+// ...
+
+switch (lightStatus)
+{
+    case LightStatus.Off:
+        // do something...
+        break;
+
+    case LightStatus.Dimmed:
+        // do something...
+        break;
+
+    case LightStatus.On:
+        // do something...
+        break;
+
+    default:
+        throw new UnexpectedEnumValueException<LightStatus>(lightStatus);
+}
+```

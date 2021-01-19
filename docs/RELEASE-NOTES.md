@@ -1,12 +1,12 @@
 # Release Notes
 
-## 1.1.0 - ?? July 2020
+## 1.1.0 - 19 January 2021
 
 Breaking changes:
 - (None)
 
 New features:
-- Added ExceptionExtensions.AllMessages
+- Added `ExceptionExtensions.AllMessages`
 
 Bug fixes / internal changes:
 - (None)
