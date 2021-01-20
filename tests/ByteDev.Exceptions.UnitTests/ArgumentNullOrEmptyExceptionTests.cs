@@ -6,6 +6,8 @@ namespace ByteDev.Exceptions.UnitTests
     [TestFixture]
     public class ArgumentNullOrEmptyExceptionTests
     {
+        private const string ParamName = "myArg";
+
         [Test]
         public void WhenNoArgs_ThenSetMessageToDefault()
         {
@@ -17,10 +19,10 @@ namespace ByteDev.Exceptions.UnitTests
         [Test]
         public void WhenParamNameSpecified_ThenSetMessageAndParamName()
         {
-            var sut = new ArgumentNullOrEmptyException("myArg");
+            var sut = new ArgumentNullOrEmptyException(ParamName);
 
             Assert.That(sut.Message, Is.EqualTo("Value cannot be null or empty. (Parameter 'myArg')"));
-            Assert.That(sut.ParamName, Is.EqualTo("myArg"));
+            Assert.That(sut.ParamName, Is.EqualTo(ParamName));
         }
 
         [Test]
@@ -37,10 +39,10 @@ namespace ByteDev.Exceptions.UnitTests
         [Test]
         public void WhenParamNameAndMessageSpecified_ThenSetMessageAndParamName()
         {
-            var sut = new ArgumentNullOrEmptyException("myArg", "some message.");
+            var sut = new ArgumentNullOrEmptyException(ParamName, "some message.");
 
             Assert.That(sut.Message, Is.EqualTo("some message. (Parameter 'myArg')"));
-            Assert.That(sut.ParamName, Is.EqualTo("myArg"));
+            Assert.That(sut.ParamName, Is.EqualTo(ParamName));
         }
     }
 }
