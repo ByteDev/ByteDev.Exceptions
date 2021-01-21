@@ -9,6 +9,7 @@ namespace ByteDev.Exceptions.UnitTests
     public class DependencyNullExceptionTests
     {
         private const string ParamName = "myDependency";
+        private const string Message = "some message";
 
         [Test]
         public void WhenNoArgs_ThenSetMessageToDefault()
@@ -21,9 +22,9 @@ namespace ByteDev.Exceptions.UnitTests
         [Test]
         public void WhenMessageSpecified_ThenSetMessage()
         {
-            var sut = new DependencyNullException("Some message.");
+            var sut = new DependencyNullException(Message);
 
-            Assert.That(sut.Message, Is.EqualTo("Some message."));
+            Assert.That(sut.Message, Is.EqualTo(Message));
         }
 
         [Test]
@@ -31,9 +32,9 @@ namespace ByteDev.Exceptions.UnitTests
         {
             var innerException = new Exception();
 
-            var sut = new DependencyNullException("Some message.", innerException);
+            var sut = new DependencyNullException(Message, innerException);
 
-            Assert.That(sut.Message, Is.EqualTo("Some message."));
+            Assert.That(sut.Message, Is.EqualTo(Message));
             Assert.That(sut.InnerException, Is.SameAs(innerException));
         }
 
@@ -46,15 +47,33 @@ namespace ByteDev.Exceptions.UnitTests
         }
 
         [Test]
-        public void WhenDependencyType_AndParamName_ThenSetMessage()
+        public void WhenDependencyTypeIsNull_ThenSetMessage()
+        {
+            var sut = new DependencyNullException(null as Type);
+
+            Assert.That(sut.Message, Is.EqualTo("Dependency type '' cannot be null."));
+        }
+        
+        [Test]
+        public void WhenDependencyType_AndParamName_ThenSetProperties()
         {
             var sut = new DependencyNullException(typeof(TestDependency), ParamName);
 
             Assert.That(sut.Message, Is.EqualTo($"Dependency type 'ByteDev.Exceptions.UnitTests.DependencyNullExceptionTests+TestDependency' cannot be null. (Parameter '{ParamName}')."));
+            Assert.That(sut.ParamName, Is.EqualTo(ParamName));
         }
 
         [Test]
-        public void WhenSerialized_ThenSavesParamName()
+        public void WhenDependencyTypeAndParamNameIsNull_ThenSetProperties()
+        {
+            var sut = new DependencyNullException(null as Type, null);
+
+            Assert.That(sut.Message, Is.EqualTo("Dependency type '' cannot be null. (Parameter '')."));
+            Assert.That(sut.ParamName, Is.Null);
+        }
+
+        [Test]
+        public void WhenSerialized_ThenDeserializeCorrectly()
         {
             var sut = new DependencyNullException(typeof(TestDependency), ParamName);
 
@@ -69,6 +88,26 @@ namespace ByteDev.Exceptions.UnitTests
                 var result = (DependencyNullException)formatter.Deserialize(stream);
 
                 Assert.That(result.ParamName, Is.EqualTo(sut.ParamName));
+                Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
+            }
+        }
+
+        [Test]
+        public void WhenSerialized_AndParamNameIsNull_ThenDeserializeCorrectly()
+        {
+            var sut = new DependencyNullException(typeof(TestDependency), null);
+
+            var formatter = new BinaryFormatter();
+
+            using (var stream = new MemoryStream())
+            {
+                formatter.Serialize(stream, sut);
+
+                stream.Seek(0, 0);
+
+                var result = (DependencyNullException)formatter.Deserialize(stream);
+
+                Assert.That(result.ParamName, Is.Null);
                 Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
             }
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 
 namespace ByteDev.Exceptions
 {
@@ -10,12 +9,17 @@ namespace ByteDev.Exceptions
     [Serializable]
     public class DependencyNullException : Exception
     {
+        private const string DefaultMessage = "Dependency cannot be null.";
+
+        /// <summary>
+        /// Parameter name.
+        /// </summary>
         public virtual string ParamName { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:ByteDev.Exceptions.DependencyNullException" /> class.
         /// </summary>
-        public DependencyNullException() : base("Dependency cannot be null.")
+        public DependencyNullException() : base(DefaultMessage)
         {
         }
 
@@ -36,11 +40,20 @@ namespace ByteDev.Exceptions
         {
         }
 
-        public DependencyNullException(Type dependencyType) : base($"Dependency type '{dependencyType.FullName}' cannot be null.")
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:ByteDev.Exceptions.DependencyNullException" /> class.
+        /// </summary>
+        /// <param name="dependencyType">Dependency type.</param>
+        public DependencyNullException(Type dependencyType) : base($"Dependency type '{dependencyType?.FullName}' cannot be null.")
         {
         }
 
-        public DependencyNullException(Type dependencyType, string paramName) : base($"Dependency type '{dependencyType.FullName}' cannot be null. (Parameter '{paramName}').")
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:ByteDev.Exceptions.DependencyNullException" /> class.
+        /// </summary>
+        /// <param name="dependencyType">Dependency type.</param>
+        /// <param name="paramName">Parameter name.</param>
+        public DependencyNullException(Type dependencyType, string paramName) : base($"Dependency type '{dependencyType?.FullName}' cannot be null. (Parameter '{paramName}').")
         {
             ParamName = paramName;
         }
@@ -53,14 +66,14 @@ namespace ByteDev.Exceptions
         protected DependencyNullException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            ParamName = (string)info.GetValue("ParamName", typeof(string));
+            ParamName = (string)info.GetValue(nameof(ParamName), typeof(string));
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
 
-            info.AddValue("ParamName", ParamName, typeof(string));
+            info.AddValue(nameof(ParamName), ParamName, typeof(string));
         }
     }
 }

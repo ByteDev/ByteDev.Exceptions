@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using NUnit.Framework;
 
 namespace ByteDev.Exceptions.UnitTests
@@ -6,6 +8,9 @@ namespace ByteDev.Exceptions.UnitTests
     [TestFixture]
     public class ArgumentDefaultExceptionTests
     {
+        private const string ParamName = "myArg";
+        private const string Message = "some message";
+
         [Test]
         public void WhenNoArgs_ThenSetMessageToDefault()
         {
@@ -17,10 +22,10 @@ namespace ByteDev.Exceptions.UnitTests
         [Test]
         public void WhenParamNameSpecified_ThenSetMessageAndParamName()
         {
-            var sut = new ArgumentDefaultException("myArg");
+            var sut = new ArgumentDefaultException(ParamName);
 
-            Assert.That(sut.Message, Is.EqualTo("Value cannot be default. (Parameter 'myArg')"));
-            Assert.That(sut.ParamName, Is.EqualTo("myArg"));
+            Assert.That(sut.Message, Is.EqualTo($"Value cannot be default. (Parameter '{ParamName}')"));
+            Assert.That(sut.ParamName, Is.EqualTo(ParamName));
         }
 
         [Test]
@@ -28,19 +33,39 @@ namespace ByteDev.Exceptions.UnitTests
         {
             var innerException = new Exception();
 
-            var sut = new ArgumentDefaultException("some message.", innerException);
+            var sut = new ArgumentDefaultException(Message, innerException);
 
-            Assert.That(sut.Message, Is.EqualTo("some message."));
+            Assert.That(sut.Message, Is.EqualTo(Message));
             Assert.That(sut.InnerException, Is.SameAs(innerException));
         }
 
         [Test]
         public void WhenParamNameAndMessageSpecified_ThenSetMessageAndParamName()
         {
-            var sut = new ArgumentDefaultException("myArg", "some message.");
+            var sut = new ArgumentDefaultException(ParamName, Message);
 
-            Assert.That(sut.Message, Is.EqualTo("some message. (Parameter 'myArg')"));
-            Assert.That(sut.ParamName, Is.EqualTo("myArg"));
+            Assert.That(sut.Message, Is.EqualTo($"{Message} (Parameter '{ParamName}')"));
+            Assert.That(sut.ParamName, Is.EqualTo(ParamName));
+        }
+
+        [Test]
+        public void WhenSerialized_ThenDeserializeCorrectly()
+        {
+            var sut = new ArgumentDefaultException(ParamName, Message);
+
+            var formatter = new BinaryFormatter();
+            
+            using (var stream = new MemoryStream())
+            {
+                formatter.Serialize(stream, sut);
+
+                stream.Seek(0, 0);
+
+                var result = (ArgumentDefaultException)formatter.Deserialize(stream);
+
+                Assert.That(result.ParamName, Is.EqualTo(sut.ParamName));
+                Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
+            }
         }
     }
 }

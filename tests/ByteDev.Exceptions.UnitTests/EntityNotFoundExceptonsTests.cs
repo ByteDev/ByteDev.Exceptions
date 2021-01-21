@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using ByteDev.Exceptions.UnitTests.TestTypes;
 using NUnit.Framework;
 
@@ -7,6 +9,9 @@ namespace ByteDev.Exceptions.UnitTests
     [TestFixture]
     public class EntityNotFoundExceptonsTests
     {
+        private const string Message = "some message";
+        private const string EntityId = "1";
+
         [Test]
         public void WhenNoArgs_ThenSetMessageToDefault()
         {
@@ -18,9 +23,9 @@ namespace ByteDev.Exceptions.UnitTests
         [Test]
         public void WhenMessageSpecified_ThenSetMessage()
         {
-            var sut = new EntityNotFoundException("Some message.");
+            var sut = new EntityNotFoundException(Message);
 
-            Assert.That(sut.Message, Is.EqualTo("Some message."));
+            Assert.That(sut.Message, Is.EqualTo(Message));
         }
 
         [Test]
@@ -28,30 +33,86 @@ namespace ByteDev.Exceptions.UnitTests
         {
             var innerException = new Exception();
 
-            var sut = new EntityNotFoundException("Some message.", innerException);
+            var sut = new EntityNotFoundException(Message, innerException);
 
-            Assert.That(sut.Message, Is.EqualTo("Some message."));
+            Assert.That(sut.Message, Is.EqualTo(Message));
             Assert.That(sut.InnerException, Is.SameAs(innerException));
         }
 
         [Test]
-        public void WhenTypeSpecified_ThenSetProperties()
+        public void WhenTypeSpecified_ThenSetMessage()
         {
             var sut = new EntityNotFoundException(typeof(DummyEntity));
 
             Assert.That(sut.Message, Is.EqualTo("Entity does not exist of type: 'ByteDev.Exceptions.UnitTests.TestTypes.DummyEntity'."));
-            Assert.That(sut.EntityType, Is.EqualTo(typeof(DummyEntity)));
             Assert.That(sut.EntityId, Is.Null);
         }
 
         [Test]
-        public void WhenTypeAndIdSpecified_ThenSetMessage()
+        public void WhenTypeIsNull_ThenSetMessage()
         {
-            var sut = new EntityNotFoundException(typeof(DummyEntity), "A1");
+            var sut = new EntityNotFoundException(null as Type);
 
-            Assert.That(sut.Message, Is.EqualTo("Entity does not exist of type: 'ByteDev.Exceptions.UnitTests.TestTypes.DummyEntity' with ID: 'A1'."));
-            Assert.That(sut.EntityType, Is.EqualTo(typeof(DummyEntity)));
-            Assert.That(sut.EntityId, Is.EqualTo("A1"));
+            Assert.That(sut.Message, Is.EqualTo("Entity does not exist of type: ''."));
+            Assert.That(sut.EntityId, Is.Null);
+        }
+
+        [Test]
+        public void WhenTypeAndIdSpecified_ThenSetProperties()
+        {
+            var sut = new EntityNotFoundException(typeof(DummyEntity), EntityId);
+
+            Assert.That(sut.Message, Is.EqualTo($"Entity does not exist of type: 'ByteDev.Exceptions.UnitTests.TestTypes.DummyEntity' with ID: '{EntityId}'."));
+            Assert.That(sut.EntityId, Is.EqualTo(EntityId));
+        }
+
+        [Test]
+        public void WhenTypeAndIdIsNull_ThenSetMessage()
+        {
+            var sut = new EntityNotFoundException(null, null as string);
+
+            Assert.That(sut.Message, Is.EqualTo("Entity does not exist of type: '' with ID: ''."));
+            Assert.That(sut.EntityId, Is.Null);
+        }
+
+        [Test]
+        public void WhenSerialized_ThenDeserializeCorrectly()
+        {
+            var sut = new EntityNotFoundException(typeof(DummyEntity), EntityId);
+
+            var formatter = new BinaryFormatter();
+            
+            using (var stream = new MemoryStream())
+            {
+                formatter.Serialize(stream, sut);
+
+                stream.Seek(0, 0);
+
+                var result = (EntityNotFoundException)formatter.Deserialize(stream);
+
+                Assert.That(result.EntityId, Is.EqualTo(sut.EntityId));
+                Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
+            }
+        }
+
+        [Test]
+        public void WhenSerialized_AndEntityIdIsNull_ThenDeserializeCorrectly()
+        {
+            var sut = new EntityNotFoundException(typeof(DummyEntity), null);
+
+            var formatter = new BinaryFormatter();
+            
+            using (var stream = new MemoryStream())
+            {
+                formatter.Serialize(stream, sut);
+
+                stream.Seek(0, 0);
+
+                var result = (EntityNotFoundException)formatter.Deserialize(stream);
+
+                Assert.That(result.EntityId, Is.Null);
+                Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
+            }
         }
     }
 }

@@ -29,6 +29,7 @@ The library consists of a small set of custom exceptions:
 - `ArgumentDefaultException`
 - `ArgumentEmptyException`
 - `ArgumentNullOrEmptyException`
+- `DependencyNullException`
 - `EntityNotFoundException`
 - `UnexpectedEnumValueException`
 
@@ -68,12 +69,31 @@ Use when an argument value cannot be null or empty.
 
 Often in such situations the programmer will decide to throw a `ArgumentException`. 
 
-Using a `ArgumentNullOrEmptyException` instead can give greater precision.
+Using a `ArgumentNullOrEmptyException` instead can give greater precision of the problem.
 
 ```csharp
 if (string.IsNullOrEmpty(name))
 {
     throw new ArgumentNullOrEmptyException(nameof(name));
+}
+```
+
+---
+
+### `DependencyNullException`
+
+Use when an injected dependency is null.
+
+Classes often have dependencies that are injected at runtime through constructor, method or property injection.
+
+A developer will often check the passed in dependency and if null throw a `ArgumentNullException`. 
+
+Using a `DependencyNullException` instead can give greater precision of the problem.
+
+```csharp
+public MyService(IRepository repository)
+{
+    _repository = repository ?? throw new DependencyNullException(typeof(IRepository));
 }
 ```
 

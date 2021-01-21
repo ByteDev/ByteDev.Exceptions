@@ -7,6 +7,8 @@ namespace ByteDev.Exceptions.UnitTests
     [TestFixture]
     public class UnexpectedEnumValueExceptionTests
     {
+        private const string Message = "some message";
+
         [Test]
         public void WhenNoArgs_ThenSetProperties()
         {
@@ -18,9 +20,9 @@ namespace ByteDev.Exceptions.UnitTests
         [Test]
         public void WhenMessageSpecified_ThenSetProperties()
         {
-            var sut = new UnexpectedEnumValueException<Color>("some message.");
+            var sut = new UnexpectedEnumValueException<Color>(Message);
 
-            Assert.That(sut.Message, Is.EqualTo("some message."));
+            Assert.That(sut.Message, Is.EqualTo(Message));
         }
 
         [Test]
@@ -28,9 +30,9 @@ namespace ByteDev.Exceptions.UnitTests
         {
             var innerException = new Exception();
 
-            var sut = new UnexpectedEnumValueException<Color>("some message.", innerException);
+            var sut = new UnexpectedEnumValueException<Color>(Message, innerException);
 
-            Assert.That(sut.Message, Is.EqualTo("some message."));
+            Assert.That(sut.Message, Is.EqualTo(Message));
             Assert.That(sut.InnerException, Is.SameAs(innerException));
         }
 

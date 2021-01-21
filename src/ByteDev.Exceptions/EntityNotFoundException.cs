@@ -9,20 +9,17 @@ namespace ByteDev.Exceptions
     [Serializable]
     public class EntityNotFoundException : Exception
     {
-        /// <summary>
-        /// Entity type.
-        /// </summary>
-        public Type EntityType { get; }
+        private const string DefaultMessage = "Entity does not exist.";
 
         /// <summary>
         /// Entity ID.
         /// </summary>
-        public string EntityId { get; }
+        public virtual string EntityId { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Chubb.Apac.Payments.Core.Services.EntityNotFoundException" /> class.
         /// </summary>
-        public EntityNotFoundException() : base("Entity does not exist.")
+        public EntityNotFoundException() : base(DefaultMessage)
         {
         }
 
@@ -47,9 +44,8 @@ namespace ByteDev.Exceptions
         /// Initializes a new instance of the <see cref="T:Chubb.Apac.Payments.Core.Services.EntityNotFoundException" /> class.
         /// </summary>
         /// <param name="entityType">Entity type.</param>
-        public EntityNotFoundException(Type entityType) : this($"Entity does not exist of type: '{entityType.FullName}'.")
+        public EntityNotFoundException(Type entityType) : this($"Entity does not exist of type: '{entityType?.FullName}'.")
         {
-            EntityType = entityType;
         }
         
         /// <summary>
@@ -57,9 +53,8 @@ namespace ByteDev.Exceptions
         /// </summary>
         /// <param name="entityType">Entity type.</param>
         /// <param name="entityId">Entity ID.</param>
-        public EntityNotFoundException(Type entityType, string entityId) : this($"Entity does not exist of type: '{entityType.FullName}' with ID: '{entityId}'.")
+        public EntityNotFoundException(Type entityType, string entityId) : this($"Entity does not exist of type: '{entityType?.FullName}' with ID: '{entityId}'.")
         {
-            EntityType = entityType;
             EntityId = entityId;
         }
 
@@ -71,6 +66,14 @@ namespace ByteDev.Exceptions
         protected EntityNotFoundException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
+            EntityId = (string)info.GetValue(nameof(EntityId), typeof(string));
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+
+            info.AddValue(nameof(EntityId), EntityId, typeof(string));
         }
     }
 }
