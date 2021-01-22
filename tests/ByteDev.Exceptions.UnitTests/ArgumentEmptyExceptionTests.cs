@@ -8,6 +8,9 @@ namespace ByteDev.Exceptions.UnitTests
     [TestFixture]
     public class ArgumentEmptyExceptionTests
     {
+        private const string Message = "some message";
+        private const string ParamName = "myArg";
+
         [Test]
         public void WhenNoArgs_ThenSetMessageToDefault()
         {
@@ -19,10 +22,10 @@ namespace ByteDev.Exceptions.UnitTests
         [Test]
         public void WhenParamNameSpecified_ThenSetMessageAndParamName()
         {
-            var sut = new ArgumentEmptyException("myArg");
+            var sut = new ArgumentEmptyException(ParamName);
 
-            Assert.That(sut.Message, Is.EqualTo("Value cannot be empty. (Parameter 'myArg')"));
-            Assert.That(sut.ParamName, Is.EqualTo("myArg"));
+            Assert.That(sut.Message, Is.EqualTo($"Value cannot be empty. (Parameter '{ParamName}')"));
+            Assert.That(sut.ParamName, Is.EqualTo(ParamName));
         }
 
         [Test]
@@ -30,25 +33,25 @@ namespace ByteDev.Exceptions.UnitTests
         {
             var innerException = new Exception();
 
-            var sut = new ArgumentEmptyException("some message.", innerException);
+            var sut = new ArgumentEmptyException(Message, innerException);
 
-            Assert.That(sut.Message, Is.EqualTo("some message."));
+            Assert.That(sut.Message, Is.EqualTo(Message));
             Assert.That(sut.InnerException, Is.SameAs(innerException));
         }
 
         [Test]
         public void WhenParamNameAndMessageSpecified_ThenSetMessageAndParamName()
         {
-            var sut = new ArgumentEmptyException("myArg", "some message.");
+            var sut = new ArgumentEmptyException(ParamName, Message);
 
-            Assert.That(sut.Message, Is.EqualTo("some message. (Parameter 'myArg')"));
-            Assert.That(sut.ParamName, Is.EqualTo("myArg"));
+            Assert.That(sut.Message, Is.EqualTo($"{Message} (Parameter '{ParamName}')"));
+            Assert.That(sut.ParamName, Is.EqualTo(ParamName));
         }
 
         [Test]
         public void WhenSerialized_ThenDeserializeCorrectly()
         {
-            var sut = new ArgumentEmptyException("myArg", "some message.");
+            var sut = new ArgumentEmptyException(ParamName, Message);
 
             var formatter = new BinaryFormatter();
             

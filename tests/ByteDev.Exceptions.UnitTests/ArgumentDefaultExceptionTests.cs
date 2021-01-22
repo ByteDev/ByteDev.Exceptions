@@ -8,8 +8,8 @@ namespace ByteDev.Exceptions.UnitTests
     [TestFixture]
     public class ArgumentDefaultExceptionTests
     {
-        private const string ParamName = "myArg";
         private const string Message = "some message";
+        private const string ParamName = "myArg";
 
         [Test]
         public void WhenNoArgs_ThenSetMessageToDefault()

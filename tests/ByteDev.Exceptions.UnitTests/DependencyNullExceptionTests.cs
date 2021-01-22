@@ -8,8 +8,8 @@ namespace ByteDev.Exceptions.UnitTests
     [TestFixture]
     public class DependencyNullExceptionTests
     {
-        private const string ParamName = "myDependency";
         private const string Message = "some message";
+        private const string ParamName = "myDependency";
 
         [Test]
         public void WhenNoArgs_ThenSetMessageToDefault()

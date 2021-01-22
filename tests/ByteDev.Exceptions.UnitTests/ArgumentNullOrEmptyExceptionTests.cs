@@ -8,6 +8,7 @@ namespace ByteDev.Exceptions.UnitTests
     [TestFixture]
     public class ArgumentNullOrEmptyExceptionTests
     {
+        private const string Message = "some message";
         private const string ParamName = "myArg";
 
         [Test]
@@ -32,25 +33,25 @@ namespace ByteDev.Exceptions.UnitTests
         {
             var innerException = new Exception();
 
-            var sut = new ArgumentNullOrEmptyException("some message.", innerException);
+            var sut = new ArgumentNullOrEmptyException(Message, innerException);
 
-            Assert.That(sut.Message, Is.EqualTo("some message."));
+            Assert.That(sut.Message, Is.EqualTo(Message));
             Assert.That(sut.InnerException, Is.SameAs(innerException));
         }
 
         [Test]
         public void WhenParamNameAndMessageSpecified_ThenSetMessageAndParamName()
         {
-            var sut = new ArgumentNullOrEmptyException(ParamName, "some message.");
+            var sut = new ArgumentNullOrEmptyException(ParamName, Message);
 
-            Assert.That(sut.Message, Is.EqualTo("some message. (Parameter 'myArg')"));
+            Assert.That(sut.Message, Is.EqualTo($"{Message} (Parameter 'myArg')"));
             Assert.That(sut.ParamName, Is.EqualTo(ParamName));
         }
 
         [Test]
         public void WhenSerialized_ThenDeserializeCorrectly()
         {
-            var sut = new ArgumentNullOrEmptyException(ParamName, "some message.");
+            var sut = new ArgumentNullOrEmptyException(ParamName, Message);
 
             var formatter = new BinaryFormatter();
             
