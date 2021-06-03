@@ -1,5 +1,16 @@
 # Release Notes
 
+## 2.1.0 - 03 June 2021
+
+Breaking changes:
+- (None)
+
+New features:
+- Added `ArgumentNullOrWhiteSpaceException`.
+
+Bug fixes / internal changes:
+- (None)
+
 ## 2.0.0 - 21 January 2021
 
 Breaking changes:
@@ -18,7 +29,7 @@ Breaking changes:
 - (None)
 
 New features:
-- Added `ExceptionExtensions.AllMessages`
+- Added `ExceptionExtensions.AllMessages`.
 
 Bug fixes / internal changes:
 - (None)

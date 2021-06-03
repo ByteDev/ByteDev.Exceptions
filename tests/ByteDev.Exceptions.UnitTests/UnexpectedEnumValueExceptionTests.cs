@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using ByteDev.Exceptions.UnitTests.Serialization;
 using ByteDev.Exceptions.UnitTests.TestTypes;
 using NUnit.Framework;
 
@@ -59,18 +60,9 @@ namespace ByteDev.Exceptions.UnitTests
         {
             var sut = new UnexpectedEnumValueException<Color>(Message);
 
-            var formatter = new BinaryFormatter();
-            
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, sut);
-
-                stream.Seek(0, 0);
-
-                var result = (UnexpectedEnumValueException<Color>)formatter.Deserialize(stream);
-
-                Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
-            }
+            var result = Serializer.SerializeAndDeserialize(sut);
+ 
+            Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
         }
     }
 }

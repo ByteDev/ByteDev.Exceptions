@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using ByteDev.Exceptions.UnitTests.Serialization;
 using NUnit.Framework;
 
 namespace ByteDev.Exceptions.UnitTests
@@ -77,19 +78,10 @@ namespace ByteDev.Exceptions.UnitTests
         {
             var sut = new DependencyNullException(typeof(TestDependency), ParamName);
 
-            var formatter = new BinaryFormatter();
+            var result = Serializer.SerializeAndDeserialize(sut);
 
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, sut);
-
-                stream.Seek(0, 0);
-
-                var result = (DependencyNullException)formatter.Deserialize(stream);
-
-                Assert.That(result.ParamName, Is.EqualTo(sut.ParamName));
-                Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
-            }
+            Assert.That(result.ParamName, Is.EqualTo(sut.ParamName));
+            Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
         }
 
         [Test]
@@ -97,19 +89,10 @@ namespace ByteDev.Exceptions.UnitTests
         {
             var sut = new DependencyNullException(typeof(TestDependency), null);
 
-            var formatter = new BinaryFormatter();
+            var result = Serializer.SerializeAndDeserialize(sut);
 
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, sut);
-
-                stream.Seek(0, 0);
-
-                var result = (DependencyNullException)formatter.Deserialize(stream);
-
-                Assert.That(result.ParamName, Is.Null);
-                Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
-            }
+            Assert.That(result.ParamName, Is.Null);
+            Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
         }
 
         public class TestDependency

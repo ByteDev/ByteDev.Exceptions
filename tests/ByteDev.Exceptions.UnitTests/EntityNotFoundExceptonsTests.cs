@@ -1,6 +1,5 @@
 ﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using ByteDev.Exceptions.UnitTests.Serialization;
 using ByteDev.Exceptions.UnitTests.TestTypes;
 using NUnit.Framework;
 
@@ -80,19 +79,10 @@ namespace ByteDev.Exceptions.UnitTests
         {
             var sut = new EntityNotFoundException(typeof(DummyEntity), EntityId);
 
-            var formatter = new BinaryFormatter();
-            
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, sut);
+            var result = Serializer.SerializeAndDeserialize(sut);
 
-                stream.Seek(0, 0);
-
-                var result = (EntityNotFoundException)formatter.Deserialize(stream);
-
-                Assert.That(result.EntityId, Is.EqualTo(sut.EntityId));
-                Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
-            }
+            Assert.That(result.EntityId, Is.EqualTo(sut.EntityId));
+            Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
         }
 
         [Test]
@@ -100,19 +90,10 @@ namespace ByteDev.Exceptions.UnitTests
         {
             var sut = new EntityNotFoundException(typeof(DummyEntity), null);
 
-            var formatter = new BinaryFormatter();
-            
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, sut);
+            var result = Serializer.SerializeAndDeserialize(sut);
 
-                stream.Seek(0, 0);
-
-                var result = (EntityNotFoundException)formatter.Deserialize(stream);
-
-                Assert.That(result.EntityId, Is.Null);
-                Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
-            }
+            Assert.That(result.EntityId, Is.Null);
+            Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
         }
     }
 }

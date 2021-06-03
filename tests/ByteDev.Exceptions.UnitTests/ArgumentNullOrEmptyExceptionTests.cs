@@ -1,6 +1,5 @@
 ﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using ByteDev.Exceptions.UnitTests.Serialization;
 using NUnit.Framework;
 
 namespace ByteDev.Exceptions.UnitTests
@@ -53,19 +52,10 @@ namespace ByteDev.Exceptions.UnitTests
         {
             var sut = new ArgumentNullOrEmptyException(ParamName, Message);
 
-            var formatter = new BinaryFormatter();
-            
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, sut);
+            var result = Serializer.SerializeAndDeserialize(sut);
 
-                stream.Seek(0, 0);
-
-                var result = (ArgumentNullOrEmptyException)formatter.Deserialize(stream);
-
-                Assert.That(result.ParamName, Is.EqualTo(sut.ParamName));
-                Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
-            }
+            Assert.That(result.ParamName, Is.EqualTo(sut.ParamName));
+            Assert.That(result.ToString(), Is.EqualTo(sut.ToString()));
         }
     }
 }

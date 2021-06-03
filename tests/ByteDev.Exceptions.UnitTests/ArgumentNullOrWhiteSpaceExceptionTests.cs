@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace ByteDev.Exceptions.UnitTests
 {
     [TestFixture]
-    public class ArgumentDefaultExceptionTests
+    public class ArgumentNullOrWhiteSpaceExceptionTests
     {
         private const string Message = "some message";
         private const string ParamName = "myArg";
@@ -13,17 +13,17 @@ namespace ByteDev.Exceptions.UnitTests
         [Test]
         public void WhenNoArgs_ThenSetMessageToDefault()
         {
-            var sut = new ArgumentDefaultException();
-
-            Assert.That(sut.Message, Is.EqualTo("Value cannot be default."));
+            var sut = new ArgumentNullOrWhiteSpaceException();
+            
+            Assert.That(sut.Message, Is.EqualTo("Value cannot be null or whitespace."));
         }
 
         [Test]
         public void WhenParamNameSpecified_ThenSetMessageAndParamName()
         {
-            var sut = new ArgumentDefaultException(ParamName);
+            var sut = new ArgumentNullOrWhiteSpaceException(ParamName);
 
-            Assert.That(sut.Message, Is.EqualTo($"Value cannot be default. (Parameter '{ParamName}')"));
+            Assert.That(sut.Message, Is.EqualTo("Value cannot be null or whitespace. (Parameter 'myArg')"));
             Assert.That(sut.ParamName, Is.EqualTo(ParamName));
         }
 
@@ -32,7 +32,7 @@ namespace ByteDev.Exceptions.UnitTests
         {
             var innerException = new Exception();
 
-            var sut = new ArgumentDefaultException(Message, innerException);
+            var sut = new ArgumentNullOrWhiteSpaceException(Message, innerException);
 
             Assert.That(sut.Message, Is.EqualTo(Message));
             Assert.That(sut.InnerException, Is.SameAs(innerException));
@@ -41,16 +41,16 @@ namespace ByteDev.Exceptions.UnitTests
         [Test]
         public void WhenParamNameAndMessageSpecified_ThenSetMessageAndParamName()
         {
-            var sut = new ArgumentDefaultException(ParamName, Message);
+            var sut = new ArgumentNullOrWhiteSpaceException(ParamName, Message);
 
-            Assert.That(sut.Message, Is.EqualTo($"{Message} (Parameter '{ParamName}')"));
+            Assert.That(sut.Message, Is.EqualTo($"{Message} (Parameter 'myArg')"));
             Assert.That(sut.ParamName, Is.EqualTo(ParamName));
         }
 
         [Test]
         public void WhenSerialized_ThenDeserializeCorrectly()
         {
-            var sut = new ArgumentDefaultException(ParamName, Message);
+            var sut = new ArgumentNullOrWhiteSpaceException(ParamName, Message);
 
             var result = Serializer.SerializeAndDeserialize(sut);
 

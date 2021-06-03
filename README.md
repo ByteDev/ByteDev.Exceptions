@@ -29,6 +29,7 @@ The library consists of a small set of custom exceptions:
 - `ArgumentDefaultException`
 - `ArgumentEmptyException`
 - `ArgumentNullOrEmptyException`
+- `ArgumentNullOrWhiteSpaceException`
 - `DependencyNullException`
 - `EntityNotFoundException`
 - `UnexpectedEnumValueException`
@@ -38,6 +39,10 @@ The library consists of a small set of custom exceptions:
 ### `ArgumentDefaultException`
 
 Use when an argument value cannot be it's `default` value.
+
+Often in such situations the programmer will decide to throw a `ArgumentException`. 
+
+Using a `ArgumentDefaultException` instead can give greater precision of the problem.
 
 ```csharp
 if (myArg == default)
@@ -52,7 +57,11 @@ if (myArg == default)
 
 Use when an argument value cannot be empty. 
 
-For example an empty string or empty collection.
+For example in the case of an empty string or empty collection.
+
+Often in such situations the programmer will decide to throw a `ArgumentException`. 
+
+Using a `ArgumentEmptyException` instead can give greater precision of the problem.
 
 ```csharp
 if (name == string.Empty)
@@ -75,6 +84,23 @@ Using a `ArgumentNullOrEmptyException` instead can give greater precision of the
 if (string.IsNullOrEmpty(name))
 {
     throw new ArgumentNullOrEmptyException(nameof(name));
+}
+```
+
+---
+
+### `ArgumentNullOrWhiteSpaceException`
+
+Use when an argument string value cannot be null or whitespace.
+
+Often in such situations the programmer will decide to throw a `ArgumentException`. 
+
+Using a `ArgumentNullOrWhiteSpaceException` instead can give greater precision of the problem.
+
+```csharp
+if (string.IsNullOrWhiteSpace(name))
+{
+    throw new ArgumentNullOrWhiteSpaceException(nameof(name));
 }
 ```
 
