@@ -10,14 +10,14 @@ namespace ByteDev.Exceptions
     public class UnexpectedEnumValueException<TEnum> : Exception where TEnum : Enum
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:ByteDev.Common.Exceptions.UnexpectedEnumValueException" /> class.
+        /// Initializes a new instance of the <see cref="T:ByteDev.Exceptions.UnexpectedEnumValueException" /> class.
         /// </summary>
         public UnexpectedEnumValueException() : base($"Unexpected value for enum '{typeof(TEnum).FullName}'.")
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:ByteDev.Common.Exceptions.UnexpectedEnumValueException" /> class.
+        /// Initializes a new instance of the <see cref="T:ByteDev.Exceptions.UnexpectedEnumValueException" /> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
         public UnexpectedEnumValueException(string message) : base(message)
@@ -25,7 +25,7 @@ namespace ByteDev.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:ByteDev.Common.Exceptions.UnexpectedEnumValueException" /> class.
+        /// Initializes a new instance of the <see cref="T:ByteDev.Exceptions.UnexpectedEnumValueException" /> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>       
@@ -34,7 +34,7 @@ namespace ByteDev.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:ByteDev.Common.Exceptions.UnexpectedEnumValueException" /> class.
+        /// Initializes a new instance of the <see cref="T:ByteDev.Exceptions.UnexpectedEnumValueException" /> class.
         /// </summary>
         /// <param name="value">The unexpected enum value.</param>
         public UnexpectedEnumValueException(TEnum value) : base($"Unexpected value '{value}' for enum '{typeof(TEnum).FullName}'.")
@@ -42,7 +42,7 @@ namespace ByteDev.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:ByteDev.Common.Exceptions.UnexpectedEnumValueException" /> class.
+        /// Initializes a new instance of the <see cref="T:ByteDev.Exceptions.UnexpectedEnumValueException" /> class.
         /// </summary>
         /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"></see> that holds the serialized object data about the exception being thrown.</param>
         /// <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext"></see> that contains contextual information about the source or destination.</param>

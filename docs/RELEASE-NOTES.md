@@ -1,5 +1,16 @@
 # Release Notes
 
+## 2.1.1 - 05 August 2021
+
+Breaking changes:
+- (None)
+
+New features:
+- (None)
+
+Bug fixes / internal changes:
+- Fixes in some types XML docs.
+
 ## 2.1.0 - 03 June 2021
 
 Breaking changes:
