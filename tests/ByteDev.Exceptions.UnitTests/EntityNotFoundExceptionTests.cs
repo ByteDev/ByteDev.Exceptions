@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace ByteDev.Exceptions.UnitTests
 {
     [TestFixture]
-    public class EntityNotFoundExceptonsTests
+    public class EntityNotFoundExceptionTests
     {
         private const string Message = "some message";
         private const string EntityId = "1";
