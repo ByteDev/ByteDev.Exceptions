@@ -1,5 +1,16 @@
 # Release Notes
 
+## 2.2.0 - 30 November 2021
+
+Breaking changes:
+- (None)
+
+New features:
+- Added `ApiHttpResponseException` class.
+
+Bug fixes / internal changes:
+- (None)
+
 ## 2.1.1 - 05 August 2021
 
 Breaking changes:

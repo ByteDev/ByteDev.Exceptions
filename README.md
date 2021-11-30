@@ -26,6 +26,7 @@ Full details of the release notes can be viewed on [GitHub](https://github.com/B
 
 The library consists of a small set of custom exceptions:
 
+- `ApiHttpResponseException`
 - `ArgumentDefaultException`
 - `ArgumentEmptyException`
 - `ArgumentNullOrEmptyException`
@@ -35,6 +36,21 @@ The library consists of a small set of custom exceptions:
 - `UnexpectedEnumValueException`
 
 ---
+
+### `ApiHttpResponseException`
+
+Use a problem occurs from a HTTP based API.
+
+For example: an unexpected response status code, unexpected response content etc.
+
+```csharp
+if (httpResponse.StatusCode != HttpStatusCode.OK)
+{
+    string content = await httpResponse.Content.ReadAsStringAsync();
+
+    throw new ApiHttpResponseException("API returned unexpected status.", httpResponse.StatusCode, content);
+}
+```
 
 ### `ArgumentDefaultException`
 
