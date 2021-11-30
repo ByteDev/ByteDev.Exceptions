@@ -39,7 +39,7 @@ The library consists of a small set of custom exceptions:
 
 ### `ApiHttpResponseException`
 
-Use a problem occurs from a HTTP based API.
+Use when a problem occurs from a HTTP based API.
 
 For example: an unexpected response status code, unexpected response content etc.
 
