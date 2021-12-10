@@ -4,7 +4,7 @@
 
 # ByteDev.Exceptions
 
-Small collection of exceptions in a .NET Standard library.
+Collection of exceptions in a .NET Standard library.
 
 ## Installation
 
@@ -48,9 +48,13 @@ if (httpResponse.StatusCode != HttpStatusCode.OK)
 {
     string content = await httpResponse.Content.ReadAsStringAsync();
 
-    throw new ApiHttpResponseException("API returned unexpected status.", httpResponse.StatusCode, content);
+    string message = "API returned unexpected status.";
+
+    throw new ApiHttpResponseException(message, httpResponse.StatusCode, content);
 }
 ```
+
+---
 
 ### `ArgumentDefaultException`
 
