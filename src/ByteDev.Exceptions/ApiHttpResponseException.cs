@@ -45,7 +45,7 @@ namespace ByteDev.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Chubb.Apac.Auto.ThailandMotor.Sdk.MotorApiClientException" /> class.
+        /// Initializes a new instance of the <see cref="T:ByteDev.Exceptions.ApiHttpResponseException" /> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
         /// <param name="statusCode">Response HTTP status code.</param>
@@ -55,7 +55,7 @@ namespace ByteDev.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Chubb.Apac.Auto.ThailandMotor.Sdk.MotorApiClientException" /> class.
+        /// Initializes a new instance of the <see cref="T:ByteDev.Exceptions.ApiHttpResponseException" /> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
         /// <param name="statusCode">Response HTTP status code.</param>
@@ -67,7 +67,7 @@ namespace ByteDev.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Chubb.Apac.Auto.ThailandMotor.Sdk.MotorApiClientException" /> class.
+        /// Initializes a new instance of the <see cref="T:ByteDev.Exceptions.ApiHttpResponseException" /> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
         /// <param name="statusCode">Response HTTP status code.</param>
@@ -78,7 +78,7 @@ namespace ByteDev.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Chubb.Apac.Auto.ThailandMotor.Sdk.MotorApiClientException" /> class.
+        /// Initializes a new instance of the <see cref="T:ByteDev.Exceptions.ApiHttpResponseException" /> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
         /// <param name="statusCode">Response HTTP status code.</param>

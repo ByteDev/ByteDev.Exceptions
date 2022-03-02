@@ -1,5 +1,16 @@
 # Release Notes
 
+## 2.2.1 - 02 March 2022
+
+Breaking changes:
+- (None)
+
+New features:
+- (None)
+
+Bug fixes / internal changes:
+- XML doc fixes.
+
 ## 2.2.0 - 30 November 2021
 
 Breaking changes:
