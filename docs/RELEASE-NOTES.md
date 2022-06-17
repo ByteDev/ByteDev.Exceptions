@@ -1,5 +1,16 @@
 # Release Notes
 
+## 2.3.0 - 17 June 2022
+
+Breaking changes:
+- (None)
+
+New features:
+- Added `ExceptionExtensions.FindInner` method.
+
+Bug fixes / internal changes:
+- (None)
+
 ## 2.2.1 - 02 March 2022
 
 Breaking changes:
@@ -62,7 +73,7 @@ Breaking changes:
 - (None)
 
 New features:
-- Added `ExceptionExtensions.AllMessages`.
+- Added `ExceptionExtensions.AllMessages` method.
 
 Bug fixes / internal changes:
 - (None)

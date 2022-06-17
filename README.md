@@ -35,6 +35,10 @@ The library consists of a small set of custom exceptions:
 - `EntityNotFoundException`
 - `UnexpectedEnumValueException`
 
+A number of `Exception` extension methods are also provided:
+- AllMessages
+- FindInner
+
 ---
 
 ### `ApiHttpResponseException`
